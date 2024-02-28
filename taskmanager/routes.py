@@ -27,7 +27,7 @@ def add_category():
         return redirect(url_for("categories")) # redirect the user back to the 'categories' page once form is submitted
     return render_template("add_category.html")
 
-
+# Edit Function
 @app.route("/edit_category/<int:category_id>", methods=["GET", "POST"])
 def edit_category(category_id):
     category = Category.query.get_or_404(category_id)
@@ -36,3 +36,12 @@ def edit_category(category_id):
         db.session.commit()
         return redirect(url_for("categories")) # redirect the user back to the 'categories' page once form is eidtted
     return render_template("edit_category.html", category=category)
+
+
+# function for deleting database
+@app.route("/delete_category/<int:category_id>")
+def delete_category(category_id):
+    category = Category.query.get_or_404(category_id)
+    db.session.delete(category)
+    db.session.commit()
+    return redirect(url_for("categories")) # redirect the user back to the 'categories' page once form is deleted
