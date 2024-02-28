@@ -10,10 +10,11 @@ def home():
 
 @app.route("/categories")
 def categories():
-    return render_template("categories.html")
+    categories = list(Category.query.order_by(Category.category_name).all())
+    return render_template("categories.html", categories=categories)
 
-                                 # When a user clicks the "Add Category" 
-                                 # button, this will use the "GET" method and render the 'add_category' template.
+                                 # When a user clicks the "Add Category" button,
+                                 # this will use the "GET" method and render the 'add_category' template.
                                  # Once they submit the form, this will call the same function, but will check if the request 
                                  # being made is a “POST“ method, which posts data somewhere, such as a database.
                                  # That why we have the if statement for the post
@@ -23,5 +24,5 @@ def add_category():
         category = Category(category_name=request.form.get("category_name"))
         db.session.add(category)
         db.session.commit()
-        return redirect(url_for("categories"))
+        return redirect(url_for("categories")) # redirect the user back to the 'categories' page once form is submitted
     return render_template("add_category.html")
