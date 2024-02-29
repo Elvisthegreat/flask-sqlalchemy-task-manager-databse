@@ -49,7 +49,8 @@ def delete_category(category_id):
 
 @app.route("/add_task", methods=["GET", "POST"])
 def add_task():
-    categories = list(Category.query.order_by(Category.category_name).all())
+    # The list of variable retrieved from the database above and store in a variable name categories
+    categories = list(Category.query.order_by(Category.category_name).all()) #  the line of code retrieves all Category records from the database, orders them by category name
     if request.method == "POST":
         task = Task(
             task_name=request.form.get("task_name"),
@@ -61,4 +62,4 @@ def add_task():
         db.session.add(task)
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template("add_task.html", categories=categories)
+    return render_template("add_task.html", categories=categories) # one for the variable name that we will be able to use on the template itself. and the other one for the categories retrieved from the database defined above.
