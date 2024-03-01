@@ -5,6 +5,7 @@ from taskmanager.models import Category, Task
 
 @app.route("/")
 def home():
+    # For displaying our task in home screen
     tasks = list(Task.query.order_by(Task.id).all())
     return render_template("tasks.html", tasks=tasks)
 
