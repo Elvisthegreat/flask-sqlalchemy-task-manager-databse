@@ -66,7 +66,7 @@ def add_task():
         return redirect(url_for("home"))
     return render_template("add_task.html", categories=categories) # one for the variable name that we will be able to use on the template itself. and the other one for the categories retrieved from the database defined above.
 
-
+# for editing task
 @app.route("/edit_task/<int:task_id>", methods=["GET", "POST"])
 def edit_task(task_id):
     task = Task.query.get_or_404(task_id)
@@ -80,3 +80,11 @@ def edit_task(task_id):
         db.session.commit()
         return redirect(url_for("home"))
     return render_template("edit_task.html", task=task, categories=categories)
+
+# for deleting task
+@app.route("/delete_task/<int:task_id>")
+def delete_task(delete_id):
+    task = Task.query.get_or_404(task_id)
+    db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for("home"))
